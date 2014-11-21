@@ -1,24 +1,19 @@
-{% extends "base.html" % }
-{% block extra_head % }
-	<link rel = "stylesheet" href = "{{ STATIC_URL }}js/dist/css/selectize.bootstrap2.css" / >
-	<link rel = "stylesheet" href = "{{ STATIC_URL }}js/dist/css/selectize.bootstrap3.css" / >
-	<link rel = "stylesheet" href = "{{ STATIC_URL }}js/dist/css/selectize.css" / >
-	<link rel = "stylesheet" href = "{{ STATIC_URL }}js/dist/css/selectize.default.css" / >
-	<link rel = "stylesheet" href = "{{ STATIC_URL }}js/dist/css/selectize.legacy.css" / >
-	<link rel = "stylesheet" href = "{{ STATIC_URL }}js/dist/css/jquery.datetimepicker.css" / >
-	<style >
-	# and_or {
-			margin - top:
-			    45px; */
-			/*text - indent:
-			    15px; */
-			color:  # 333;
-			font - size:
-			    15px;
-			opacity:
-			    0.5;
-			font - family:
-			    Serif;;
+{% extends "base.html" %}
+{% block extra_head %}
+	<link rel="stylesheet" href="{{ STATIC_URL }}js/dist/css/selectize.bootstrap2.css" />
+	<link rel="stylesheet" href="{{ STATIC_URL }}js/dist/css/selectize.bootstrap3.css" />
+	<link rel="stylesheet" href="{{ STATIC_URL }}js/dist/css/selectize.css" />
+	<link rel="stylesheet" href="{{ STATIC_URL }}js/dist/css/selectize.default.css" />
+	<link rel="stylesheet" href="{{ STATIC_URL }}js/dist/css/selectize.legacy.css" />
+	<link rel="stylesheet" href="{{ STATIC_URL }}js/dist/css/jquery.datetimepicker.css" />
+	<style>
+		#and_or {
+			margin-top: 45px;*/
+			/*text-indent: 15px; */
+			color: #333;
+			font-size: 15px;
+			opacity: 0.5; 
+			font-family: Serif;;
 		}
 	</style>
 {% endblock %}
@@ -121,7 +116,7 @@
 	}">
  		<h2>Add Group Form</h2>
  		Group Name:</br>
- 		<input id="id_groupname" maxlength="30" placeholder="Enter Group Name" name="name" type="text" required/><br />
+ 		<input id="id_groupname" maxlength="30" placeholder="Enter Group Name" name="name" type="text" required/><br/>
  		<p id="server_errors" data-bind="html: group_validation_errors"></p>
  		<input type="submit" class="button" value="Submit">
     	<a class="close-reveal-modal">&#215;</a>
