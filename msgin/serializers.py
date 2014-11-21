@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from msgin.models import Message, User
+from msgin.models import Message, User, Group
 
 
 class MessageSerializer(serializers.ModelSerializer):
@@ -26,13 +26,15 @@ class UserSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'username',
-             'sent_messages',
+            'password',
         )
 
 
-# class GroupSerializer(serializers.ModelSerializer):
+class GroupSerializer(serializers.ModelSerializer):
 
-#     class Meta:
-#         model = Group
-#         fields = (
-#         )
+    class Meta:
+        model = Group
+        fields = (
+            'id',
+            'name'
+        )

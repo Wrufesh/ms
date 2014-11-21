@@ -1,25 +1,34 @@
-{% extends "base.html" %}
-{% block extra_head %}
-	<link rel="stylesheet" href="{{ STATIC_URL }}js/dist/css/selectize.bootstrap2.css" />
-	<link rel="stylesheet" href="{{ STATIC_URL }}js/dist/css/selectize.bootstrap3.css" />
-	<link rel="stylesheet" href="{{ STATIC_URL }}js/dist/css/selectize.css" />
-	<link rel="stylesheet" href="{{ STATIC_URL }}js/dist/css/selectize.default.css" />
-	<link rel="stylesheet" href="{{ STATIC_URL }}js/dist/css/selectize.legacy.css" />
-	<link rel="stylesheet" href="{{ STATIC_URL }}js/dist/css/jquery.datetimepicker.css" />
-	<style>
-		#and_or {
-			margin-top: 45px;*/
-			/*text-indent: 15px; */
-			color: #333;
-			font-size: 15px;
-			opacity: 0.5; 
-			font-family: Serif;;
+{% extends "base.html" % }
+{% block extra_head % }
+	<link rel = "stylesheet" href = "{{ STATIC_URL }}js/dist/css/selectize.bootstrap2.css" / >
+	<link rel = "stylesheet" href = "{{ STATIC_URL }}js/dist/css/selectize.bootstrap3.css" / >
+	<link rel = "stylesheet" href = "{{ STATIC_URL }}js/dist/css/selectize.css" / >
+	<link rel = "stylesheet" href = "{{ STATIC_URL }}js/dist/css/selectize.default.css" / >
+	<link rel = "stylesheet" href = "{{ STATIC_URL }}js/dist/css/selectize.legacy.css" / >
+	<link rel = "stylesheet" href = "{{ STATIC_URL }}js/dist/css/jquery.datetimepicker.css" / >
+	<style >
+	# and_or {
+			margin - top:
+			    45px; */
+			/*text - indent:
+			    15px; */
+			color:  # 333;
+			font - size:
+			    15px;
+			opacity:
+			    0.5;
+			font - family:
+			    Serif;;
 		}
 	</style>
 {% endblock %}
 
 {% block content %}
 
+
+<div id="main-error-area" class="row">
+</div>
+	
 
 {% if message_id %}
 	<form action="/message/{{ message_id }}/" method="post">
@@ -74,50 +83,141 @@
 		</div>
 	<div class = "row">
 		<div class = "small-12 column">
-			<input id="submit" type="submit" value="Save" data-bind="value: change_button_value, enable: u_r().length > 0 || g_r().length > 0"  >
+			<input id="submit" type="submit" class="button" value="Save" data-bind="value: change_button_value, enable: u_r().length > 0 || g_r().length > 0"  >
 		</div>
 		
 	</div>
 </form>
+
+<div id="user_receivers" class="reveal-modal [small]" data-reveal>
+<form id="add_user_form" data-bind="submit: function(data){
+	var url = 'http://127.0.0.1:8000/users/';
+	var optionField = 'username';
+	var oble = 'u_r';
+	var selectize_element = '#id_user_receivers';
+	ajaxPost(url, optionField, oble, selectize_element, data)
+	}">
+    <h2>Add User Form</h2>
+    
+    Username:
+    <input id="id_username" maxlength="30" name="username" type="text" placeholder="Enter Username" required/><br />
+    Password:
+    <input id="id_password" name="password" type="password" placeholder="Enter Password" data-bind="value: add_user_form_validation.password"required/>
+	Retype Password:
+	<input id="id_password_re" name="password_re" placeholder="Conform Password" type="password" data-bind="value: add_user_form_validation.password_re" required/>
+	<p id="server_errors" data-bind="html: add_user_form_validation.errors"></p>
+	<input id="user_receivers_submit" type="submit" class="button" value="Submit" data-bind="enable: add_user_form_validation.password() == add_user_form_validation.password_re()"/>
+	<a class="close-reveal-modal">&#215;</a>
+</form>
+</div>
+
+<div id="group_receivers" class="reveal-modal" data-reveal>
+	<form data-bind="submit: function(data){
+	var url = 'http://127.0.0.1:8000/groups/';
+	var optionField = 'name';
+	var oble = 'g_r';
+	var selectize_element = '#id_group_receivers';
+	ajaxPost(url, optionField, oble, selectize_element, data)
+	}">
+ 		<h2>Add Group Form</h2>
+ 		Group Name:</br>
+ 		<input id="id_groupname" maxlength="30" placeholder="Enter Group Name" name="name" type="text" required/><br />
+ 		<p id="server_errors" data-bind="html: group_validation_errors"></p>
+ 		<input type="submit" class="button" value="Submit">
+    	<a class="close-reveal-modal">&#215;</a>
+    </form>
+</div>
+
 {% endblock %}
 
 {% block extra_script %}
-
-{% if data_json %}
-<script type="text/javascript">
-    e_msg = {{ data_json|safe }};
-    
-</script>
-{% endif %}
-
 <script type="text/javascript" src="{{ STATIC_URL }}js/dist/js/standalone/selectize.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/dist/js/standalone/selectize.min.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/dist/jquery.datetimepicker.js"></script>
 
 <script type="text/javascript">
+
+function ucFirstAllWords( str )
+{
+    var pieces = str.split(" ");
+    for ( var i = 0; i < pieces.length; i++ )
+    {
+        var j = pieces[i].charAt(0).toUpperCase();
+        pieces[i] = j + pieces[i].substr(1);
+    }
+    return pieces.join(" ");
+}
+
+
+function getModelChoice(m_url, choice_field, value)
+{
+	var opt_list = [];
+	    $.get(m_url, function(data)
+	    {
+		    for(i=0;i<data.length;i++)
+		    {
+			    var user = {
+				    text: data[i][choice_field],
+				    value: data[i].id
+				};
+			    opt_list.push(user);
+		    };
+		    
+	    }).done(function(){
+	    	value(opt_list);
+	    });
+
+}
+
 ko.bindingHandlers.customSelectize = {
 	init: function(element, valueAccessor, allBindings){
+				var json_url = allBindings.get('modelUrl');
+				var choice_field = allBindings.get('choiceField');
+				var value = valueAccessor();
+				getModelChoice(json_url, choice_field, value);
 				var $select = $(element).selectize({
-					plugins: ['remove_button']
-				});
-				var selectizeControl = $select[0].selectize;
-
-				selectizeControl.on('change', function() {
-      				var test = selectizeControl.getValue();
-      				var value = valueAccessor();
-      				value(test);
+					plugins: ['remove_button'],
 					});
+				var z = ucFirstAllWords($(element)
+      					.attr('name')
+      					.replace(/_/g, ' '));
+      			var element_to_append = $(element)
+      					.parent()
+      					.find('.selectize-dropdown.multi.plugin-remove_button');
+      			var html_to_append = '<div class="label" style="width:100%;font-size:medium;font-weight:bold" data-reveal-id="' + 
+      							$(element).attr('name') +
+      							'">Add '+ 
+      						z +
+      						'</div>';
+      			$(element_to_append).append(html_to_append);
+				var selectizeControl = $select[0].selectize;
+				
+				selectizeControl.on('dropdown_close', function() {
+					var parent = $(element)
+      					.parent();
+      				var ele = $(parent).find('.selectize-dropdown.multi.plugin-remove_button');
+					var choice_ele = $(ele).find('.selectize-dropdown-content').find('.option');
+					var choice_length = choice_ele.length;
+					var is_focus = $(parent).find('.selectize-input.items').hasClass("focus");
+					if(choice_length == 0 & is_focus){
+						$(ele).css("display","block");
+						}
+					}
+
+				);
+				$(element).on('click', function() {
+					var parent = $(element)
+      					.parent();
+      				var ele = $(parent).find('.selectize-dropdown.multi.plugin-remove_button');
+					$(ele).css("display","block");
+					}
+				);
 	},
+	
 	update: function(element, valueAccessor, allbinding){
 				var value = valueAccessor();
 				var valueUnWrapped = ko.unwrap(value);
-				var $select = $(element).selectize({
- 				plugins: ['remove_button']
-				});
-				var selectize = $select[0].selectize;
-				for (i=0;i<valueUnWrapped.length;i++){
-					selectize.addItem(valueUnWrapped[i]);
-					};
+				console.log(valueUnWrapped);
 	},
 };
 
@@ -146,36 +246,46 @@ ko.bindingHandlers.customSelectize = {
 		var self = this;
 		self.tog = ko.observable(false);
 		self.change_button_value = ko.observable('Submit')
-		self.get_u_r = function(){
-			if (typeof e_msg === 'undefined') {
-				var data = null;
-                return data;
-			}
-			else {
-				obj = e_msg;
-				// alert(obj.user_receiver);
-				return obj.user_receiver;
-			};
-
-		};
-		self.get_g_r = function(){
-			if (typeof e_msg === 'undefined') {
-				var data =  null;
-                return data;
-			}
-			else {
-				obj = e_msg;
-				return obj.group_receiver;
-			};
-
-		 };
-
-		 var q = self.get_u_r();
-		 var r = self.get_g_r();
-
-		self.u_r = ko.observableArray(q);
-		self.g_r = ko.observableArray(r);
+		self.u_r = ko.observableArray();
+		self.g_r = ko.observableArray();
 		
+		self.add_user_form_validation = {
+			password: ko.observable(),
+			password_re: ko.observable(),
+			errors: ko.observable(),
+		};
+
+		self.group_validation_errors = ko.observable();
+
+		self.ajaxPost = function(url, optionField, oble, selectize_element, formElement){
+			var x = $('formElement, input').serialize();
+			$.post(url,x
+				).success(function(data){
+					createdObj = {
+						text: data[optionField],
+						value: data.id,
+					};
+					self[oble].push(createdObj);
+
+					var $select = $(selectize_element).selectize({
+					});
+					var selectize = $select[0].selectize;
+					selectize.addOption(createdObj);
+					selectize.addItem(data.id);
+
+					var hh = $(formElement).find('.close-reveal-modal');
+					$(hh).trigger("click");
+
+				}).done(function(){
+					var errorHtml = '<div data-alert class="alert-box success"> Option successfully ADDED and SELECTED! <a href="#" class="close">&times;</a></div>';
+					$('#main-error-area').append(errorHtml).foundation();
+					$('#main-error-area').fadeOut(6000, "swing");
+				}).error(function(data){
+					var errorHtml = '<div data-alert class="alert-box round">'+ data.responseText +'<a href="#" class="close">&times;</a></div>';
+					$(formElement).append(errorHtml);
+				});
+		};
+
 		self.submit_save = function(data,event){
 			if(self.tog()==true){
 				self.change_button_value('Save');
@@ -193,6 +303,5 @@ ko.bindingHandlers.customSelectize = {
 
 	toggle = new Toggle();
 	ko.applyBindings(toggle);
-
 </script>
 {% endblock %}

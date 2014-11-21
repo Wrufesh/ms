@@ -8,11 +8,12 @@ from msgin.celery import app
 import re
 from django.db.models import Q
 
-from msgin.serializers import MessageSerializer, UserSerializer
+from msgin.serializers import MessageSerializer, UserSerializer, GroupSerializer
 from rest_framework import generics
 from rest_framework import permissions
 from msgin.permissions import IsOwnerOrReadOnly
 from rest_framework.renderers import JSONRenderer
+import pdb
 
 
 def get_related_list(obj):
@@ -102,13 +103,14 @@ def compose(request, msg_id=None):
                 'scheduled_time': e_message.send_time,
             }
             form = ComposeMessageForm(data)
-            # pdb.set_trace()
+            pdb.set_trace()
             serializer = MessageSerializer(e_message)
             data_json = JSONRenderer().render(serializer.data)
-            # pdb.set_trace()
         else:
             form = ComposeMessageForm()
-    context = {'form': form, 'message_id': msg_id, 'data_json': data_json}
+    context = {'form': form,
+               'message_id': msg_id,
+               'data_json': data_json}
     return render(request, 'msgin/compose_message.html', context)
 
 
@@ -187,11 +189,26 @@ class MessageDetail(generics.RetrieveUpdateDestroyAPIView):
         obj.sender = self.request.user
 
 
-class UserList(generics.ListAPIView):
+class UserList(generics.ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    def post_save(self, obj, created=False):
+        if created:
+            obj.set_password(obj.password)
+            obj.save()
+
+
+class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 
-class UserDetail(generics.RetrieveAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+class GroupList(generics.ListCreateAPIView):
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+
+
+class GroupDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
