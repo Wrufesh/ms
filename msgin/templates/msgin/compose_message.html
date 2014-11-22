@@ -94,11 +94,11 @@
 	}">
     <h2>Add User Form</h2>
     
-    Username:
+    <label>Username:</label>
     <input id="id_username" maxlength="30" name="username" type="text" placeholder="Enter Username" required/><br />
-    Password:
+    <label>Password:</label>
     <input id="id_password" name="password" type="password" placeholder="Enter Password" data-bind="value: add_user_form_validation.password"required/>
-	Retype Password:
+	<label>Retype Password:</label>
 	<input id="id_password_re" name="password_re" placeholder="Conform Password" type="password" data-bind="value: add_user_form_validation.password_re" required/>
 	<p id="server_errors" data-bind="html: add_user_form_validation.errors"></p>
 	<input id="user_receivers_submit" type="submit" class="button" value="Submit" data-bind="enable: add_user_form_validation.password() == add_user_form_validation.password_re()"/>
@@ -114,10 +114,9 @@
 	var selectize_element = '#id_group_receivers';
 	ajaxPost(url, optionField, oble, selectize_element, data)
 	}">
- 		<h2>Add Group Form</h2>
- 		Group Name:</br>
- 		<input id="id_groupname" maxlength="30" placeholder="Enter Group Name" name="name" type="text" required/><br/>
- 		<p id="server_errors" data-bind="html: group_validation_errors"></p>
+ 		<h2>Add Group Form</h2></br>
+ 		<label>Group Name:<label>
+ 		<input id="id_groupname" maxlength="30" placeholder="Enter Group Name" name="name" type="text" required/>
  		<input type="submit" class="button" value="Submit">
     	<a class="close-reveal-modal">&#215;</a>
     </form>
@@ -132,6 +131,7 @@
 
 <script type="text/javascript">
 
+// Converts all starting letter of the string to Uppercase
 function ucFirstAllWords( str )
 {
     var pieces = str.split(" ");
@@ -143,7 +143,7 @@ function ucFirstAllWords( str )
     return pieces.join(" ");
 }
 
-
+// This function gets the choices from api and updated observable
 function getModelChoice(m_url, choice_field, value)
 {
 	var opt_list = [];
@@ -169,6 +169,7 @@ ko.bindingHandlers.customSelectize = {
 				var json_url = allBindings.get('modelUrl');
 				var choice_field = allBindings.get('choiceField');
 				var value = valueAccessor();
+				// Updates the select options in an observable array
 				getModelChoice(json_url, choice_field, value);
 				var $select = $(element).selectize({
 					plugins: ['remove_button'],
@@ -184,9 +185,11 @@ ko.bindingHandlers.customSelectize = {
       							'">Add '+ 
       						z +
       						'</div>';
+      			// Add option appended to selectize
       			$(element_to_append).append(html_to_append);
 				var selectizeControl = $select[0].selectize;
 				
+				// This event handler shows add option when all items are continiously selected
 				selectizeControl.on('dropdown_close', function() {
 					var parent = $(element)
       					.parent();
@@ -198,8 +201,9 @@ ko.bindingHandlers.customSelectize = {
 						$(ele).css("display","block");
 						}
 					}
-
 				);
+				
+				// This event handler shows Add option when item is full and select field is back in focus
 				$(element).on('click', function() {
 					var parent = $(element)
       					.parent();
@@ -209,6 +213,7 @@ ko.bindingHandlers.customSelectize = {
 				);
 	},
 	
+	// This object has no use except showing observable value when changed
 	update: function(element, valueAccessor, allbinding){
 				var value = valueAccessor();
 				var valueUnWrapped = ko.unwrap(value);
@@ -247,10 +252,7 @@ ko.bindingHandlers.customSelectize = {
 		self.add_user_form_validation = {
 			password: ko.observable(),
 			password_re: ko.observable(),
-			errors: ko.observable(),
 		};
-
-		self.group_validation_errors = ko.observable();
 
 		self.ajaxPost = function(url, optionField, oble, selectize_element, formElement){
 			var x = $('formElement, input').serialize();
@@ -274,7 +276,7 @@ ko.bindingHandlers.customSelectize = {
 				}).done(function(){
 					var errorHtml = '<div data-alert class="alert-box success"> Option successfully ADDED and SELECTED! <a href="#" class="close">&times;</a></div>';
 					$('#main-error-area').append(errorHtml).foundation();
-					$('#main-error-area').fadeOut(6000, "swing");
+					// $('#main-error-area').fadeOut(6000, "swing");
 				}).error(function(data){
 					var errorHtml = '<div data-alert class="alert-box round">'+ data.responseText +'<a href="#" class="close">&times;</a></div>';
 					$(formElement).append(errorHtml);
