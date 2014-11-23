@@ -213,10 +213,15 @@ ko.bindingHandlers.customSelectize = {
 				);
 	},
 	
-	// This object has no use except showing observable value when changed
+	// This object shows observable value when changed. And also populate options when init updates it from api.
 	update: function(element, valueAccessor, allbinding){
 				var value = valueAccessor();
 				var valueUnWrapped = ko.unwrap(value);
+				var $select = $(element).selectize();
+				var selectize = $select[0].selectize;
+				for(i=0;i<valueUnWrapped.length;i++){
+					selectize.addOption(valueUnWrapped[i]);
+				};
 				console.log(valueUnWrapped);
 	},
 };
