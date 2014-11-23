@@ -132,10 +132,10 @@ def outbox(request):
 
 
 def messages_by_user(request, user_id):
-    get_user = User.objects.get(id=user_id)
+    g_user = User.objects.get(id=user_id)
     obj = Message.objects.filter(
         sender=request.user,
-        user_receiver=get_user,
+        user_receiver=g_user,
         status="OUTBOX")
     return render(request, "msgin/outbox.html", {'obj': obj})
 
