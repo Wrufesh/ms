@@ -1,8 +1,6 @@
 from msgin.models import User, Group
 from django import forms
 from django.utils import timezone
-from django.core.urlresolvers import reverse_lazy
-import pdb
 
 
 class ComposeMessageForm(forms.Form):
@@ -11,7 +9,7 @@ class ComposeMessageForm(forms.Form):
         required=False,
         widget=forms.SelectMultiple(
             attrs={
-                'data-bind': 'customSelectize:u_r,modelUrl:"/users/", choiceField:"username"',
+                'data-bind': 'customSelectize: u_r, modelUrl:"/users/", choiceField:"username"',
                 'placeholder': 'Select USERS'}))
     group_receivers = forms.ModelMultipleChoiceField(
         queryset=Group.objects.all(),
