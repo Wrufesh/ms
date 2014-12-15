@@ -1,9 +1,133 @@
-<title>Compose Message</title>
-<form action="/message/compose/" method="post">
-{% csrf_token %}
-<table>
-{{form.as_table}}
+{% extends "base.html" %}
+{% block extra_head %}
+	<link rel="stylesheet" href="{{ STATIC_URL }}js/dist/css/selectize.bootstrap2.css" />
+	<link rel="stylesheet" href="{{ STATIC_URL }}js/dist/css/selectize.bootstrap3.css" />
+	<link rel="stylesheet" href="{{ STATIC_URL }}js/dist/css/selectize.css" />
+	<link rel="stylesheet" href="{{ STATIC_URL }}js/dist/css/selectize.default.css" />
+	<link rel="stylesheet" href="{{ STATIC_URL }}js/dist/css/selectize.legacy.css" />
+	<link rel="stylesheet" href="{{ STATIC_URL }}js/dist/css/jquery.datetimepicker.css" />
+	<style>
+		#and_or {
+			margin-top: 45px;*/
+			/*text-indent: 15px; */
+			color: #333;
+			font-size: 15px;
+			opacity: 0.5; 
+			font-family: Serif;;
+		}
+	</style>
+{% endblock %}
 
-<tr><td></td><td><input type="submit" value="Submit"></td></tr>
-</table>
+{% block content %}
+
+
+<div id="main-error-area" class="row">
+</div>
+	
+
+{% if message_id %}
+	<form action="/message/{{ message_id }}/" method="post">
+{% else %}
+	<form action="/message/compose/" method="post">
+{% endif %}
+
+{% csrf_token %}
+	<div class = "row">
+		<div class = "small-5 column">
+			<label>{{ form.user_receivers.label }}:
+			{{ form.user_receivers }}
+			</label>
+		</div>
+		<div class = "small-1 column">
+			<p id="and_or">AND|OR</p>
+		</div>
+
+		<div class = "small-5 column">
+			<label>{{ form.group_receivers.label }}:
+			{{ form.group_receivers }}
+			</label>
+		</div>
+	</div>
+	<br/>
+	<div class = "row">
+		<div class = "small-12 column">
+			<label>{{ form.message.label }}:
+			<p>{{ form.message.errors }}</p>
+			{{ form.message }}
+			</label>
+		</div>
+	</div>
+	
+	<div class = "row">
+		<div class = "small-2 column">
+			<label>{{ form.schedule.label }}:</label>
+			{{ form.schedule }}
+		</div>
+	</div>
+	<div class="row">
+		<div class="small-3 column">
+			<label data-bind="visible:tog">{{ form.scheduled_time.label }}:</label>
+		</div>
+		<div class="small-9 column">
+			<p>{{ form.scheduled_time.errors }}</p>
+			<p data-bind="visible:tog">{{ form.scheduled_time }}</p>
+		</div>
+
+		</div>
+			</div>
+		</div>
+	<div class = "row">
+		<div class = "small-12 column">
+			<input id="submit" type="submit" class="button" value="Save" data-bind="value: change_button_value, enable: u_r().length > 0 || g_r().length > 0"  >
+		</div>
+		
+	</div>
 </form>
+
+<div id="user_receivers" class="reveal-modal [small]" data-reveal>
+<form id="add_user_form" data-bind="submit: function(data){
+	var url = 'http://127.0.0.1:8000/users/';
+	var optionField = 'username';
+	var oble = 'u_r';
+	var selectize_element = '#id_user_receivers';
+	ajaxPost(url, optionField, oble, selectize_element, data)
+	}">
+    <h2>Add User Form</h2>
+    
+    <label>Username:</label>
+    <input id="id_username" maxlength="30" name="username" type="text" placeholder="Enter Username" required/><br />
+    <label>Password:</label>
+    <input id="id_password" name="password" type="password" placeholder="Enter Password" data-bind="value: add_user_form_validation.password"required/>
+	<label>Retype Password:</label>
+	<input id="id_password_re" name="password_re" placeholder="Conform Password" type="password" data-bind="value: add_user_form_validation.password_re" required/>
+	<p id="server_errors" data-bind="html: add_user_form_validation.errors"></p>
+	<input id="user_receivers_submit" type="submit" class="button" value="Submit" data-bind="enable: add_user_form_validation.password() == add_user_form_validation.password_re()"/>
+	<a class="close-reveal-modal">&#215;</a>
+</form>
+</div>
+
+<div id="group_receivers" class="reveal-modal" data-reveal>
+	<form data-bind="submit: function(data){
+	var url = 'http://127.0.0.1:8000/groups/';
+	var optionField = 'name';
+	var oble = 'g_r';
+	var selectize_element = '#id_group_receivers';
+	ajaxPost(url, optionField, oble, selectize_element, data)
+	}">
+ 		<h2>Add Group Form</h2></br>
+ 		<label>Group Name:<label>
+ 		<input id="id_groupname" maxlength="30" placeholder="Enter Group Name" name="name" type="text" required/>
+ 		<input type="submit" class="button" value="Submit">
+    	<a class="close-reveal-modal">&#215;</a>
+    </form>
+</div>
+
+{% endblock %}
+
+{% block extra_script %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/dist/js/standalone/selectize.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/dist/js/standalone/selectize.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/dist/jquery.datetimepicker.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/script/selectize_custom_binding.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/script/compose_msg_viewModel.js"></script>
+{% endblock %}
