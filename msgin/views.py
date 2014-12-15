@@ -12,7 +12,6 @@ from msgin.serializers import MessageSerializer, UserSerializer, GroupSerializer
 from rest_framework import generics
 from rest_framework import permissions
 from msgin.permissions import IsOwnerOrReadOnly
-from rest_framework.renderers import JSONRenderer
 import pdb
 
 
@@ -54,7 +53,6 @@ def compose(request, msg_id=None):
         edit = True
     else:
         edit = False
-        data_json = None
     if request.method == 'POST':
         form = ComposeMessageForm(request.POST)
 
@@ -104,13 +102,11 @@ def compose(request, msg_id=None):
             }
             form = ComposeMessageForm(data)
             pdb.set_trace()
-            serializer = MessageSerializer(e_message)
-            data_json = JSONRenderer().render(serializer.data)
         else:
             form = ComposeMessageForm()
     context = {'form': form,
-               'message_id': msg_id,
-               'data_json': data_json}
+               'message_id': msg_id
+               }
     return render(request, 'msgin/compose_message.html', context)
 
 
@@ -141,28 +137,28 @@ def messages_by_user(request, user_id):
 
 
 def messages_by_group(request, group_id):
-    get_group = Group.objects.get(id=group_id)
+    g_group = Group.objects.get(id=group_id)
     obj = Message.objects.filter(
         sender=request.user,
-        group_receiver=get_group,
+        group_receiver=g_group,
         status="OUTBOX")
     return render(request, "msgin/outbox.html", {'obj': obj})
 
 
 def sent_msg_by_user(request, user_id):
-    get_user = User.objects.get(id=user_id)
+    g_user = User.objects.get(id=user_id)
     obj = Message.objects.filter(
         sender=request.user,
-        user_receiver=get_user,
+        user_receiver=g_user,
         status="SEND")
     return render(request, "msgin/sent.html", {'obj': obj})
 
 
 def sent_msg_by_group(request, group_id):
-    get_group = Group.objects.get(id=group_id)
+    g_group = Group.objects.get(id=group_id)
     obj = Message.objects.filter(
         sender=request.user,
-        group_receiver=get_group,
+        group_receiver=g_group,
         status="SEND")
     return render(request, "msgin/sent.html", {'obj': obj})
 

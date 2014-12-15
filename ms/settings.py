@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
 # from . import celeryconf
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -86,18 +87,10 @@ WSGI_APPLICATION = 'ms.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'msg',
-        'USER': 'msg',
-        'PASSWORD': 'msg',
-        # Empty for localhost through domain sockets or '127.0.0.1' for
-        # localhost through TCP.
-        'HOST': '',
-        'PORT': '',  # Set to empty string for default.
-    }
-}
+try:
+    from locale_settings import *
+except ImportError:
+    pass
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
