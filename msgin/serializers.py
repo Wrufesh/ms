@@ -18,9 +18,9 @@ class MessageSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    sent_messages = serializers.PrimaryKeyRelatedField(
-        queryset=Message.objects.all(),
-        many=True)
+    # sent_messages = serializers.PrimaryKeyRelatedField(
+    #     queryset=Message.objects.all(),
+    #     many=True)
 
     class Meta:
         model = User

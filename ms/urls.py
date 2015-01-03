@@ -25,3 +25,8 @@ urlpatterns += patterns('',
                             include('rest_framework.urls',
                                     namespace='rest_framework')),
                         )
+# urlpatterns += patterns('',
+#                         url(r'^static/(?P<path>.*)$',
+#                             'django.views.static.serve', {
+#                                 'document_root': settings.STATIC_ROOT,
+#                             }),)

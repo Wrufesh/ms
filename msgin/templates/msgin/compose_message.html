@@ -86,7 +86,7 @@
 
 <div id="user_receivers" class="reveal-modal [small]" data-reveal>
 <form id="add_user_form" data-bind="submit: function(data){
-	var url = 'http://127.0.0.1:8000/users/';
+	var url = '/users/';
 	var optionField = 'username';
 	var oble = 'u_r';
 	var selectize_element = '#id_user_receivers';
@@ -108,7 +108,7 @@
 
 <div id="group_receivers" class="reveal-modal" data-reveal>
 	<form data-bind="submit: function(data){
-	var url = 'http://127.0.0.1:8000/groups/';
+	var url = '/groups/';
 	var optionField = 'name';
 	var oble = 'g_r';
 	var selectize_element = '#id_group_receivers';
