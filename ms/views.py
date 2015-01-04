@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def home(request):
-	return HttpResponse('This is the homepage')
+	return render(request, 'home.html')

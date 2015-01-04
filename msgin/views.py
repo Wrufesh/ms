@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 from msgin.models import Message, User, Group
 from django.utils import timezone
 from msgin.forms import ComposeMessageForm
@@ -45,6 +46,7 @@ def index(request):
     return render(request, 'msgin/index.html')
 
 
+# @login_required
 def compose(request, msg_id=None):
     if msg_id is not None:
         new_message = Message.objects.get(id=msg_id)
@@ -161,6 +163,14 @@ def sent_msg_by_group(request, group_id):
         group_receiver=g_group,
         status="SEND")
     return render(request, "msgin/sent.html", {'obj': obj})
+
+# def login(request):
+#     if request.method == 'POST':
+#         username = request.POST['username']
+#         password = request.POST['passowrd']
+
+#     else:
+#         return render(request,"msgin/login.html")
 
 
 class MessageList(generics.ListCreateAPIView):

@@ -21,6 +21,12 @@
 					<li > <a href="/message/sent/" > Sent </a> </li>
 					<li > <a href="/message/inbox/" > Inbox </a> </li>
 					<li > <a href="/message/outbox/" > Outbox </a> </li>
+					<li style="float:right">{{ user }}</li>
+					{% if user.is_anonymous %}
+					    <li style="float:right"><a href="/login/">login</a></li>
+					{% else %}
+					    <li style="float:right"><a href="/logout/">logout</a></li>
+					{% endif %}
 				</ul>
 <!-- < nav class = "top-bar" data - topbar role = "navigation" >
                     <section class = "top-bar-section" >
