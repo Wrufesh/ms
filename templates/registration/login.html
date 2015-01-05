@@ -15,9 +15,6 @@
 <body style="background-color:black">
 <title>ABMS Login</title>
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/foundation.min.css"/>
-{% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
 <div class="row">
 	<div class="small-4 column">
 	<br/>
@@ -38,7 +35,11 @@
              </tr>
              </table>
 
+{% if form.errors %}
+<p style="color:#00bfcf">Your username and password didn't match. Please try again.</p>
+{% endif %}
              <input type="submit" class="button round" value="login" />
+             <input type="hidden" name="next" value="/" />
          </form>
     </div>
     <div class="small-4 column">
@@ -49,6 +50,5 @@
         <img src="/static/img/scroll_bulk_sms.png">
     </div>
 </div>         
-         <input type="hidden" name="next" value="/" />
 </div>
 </body>
