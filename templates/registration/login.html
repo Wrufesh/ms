@@ -7,6 +7,9 @@
 	padding-top:1.8em;
 	padding-left:0.5em
 }
+.tablerow{
+	background-color:#008bca;
+}
 
 </style>
 <body style="background-color:black">
@@ -22,20 +25,20 @@
 	<br/>
 	<br/>
          <h3 style="font-family:Sans-serif;color:#008cba">Login</h3>
-         <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+         <form method="post" action="{% url 'django.contrib.auth.views.login' %}" radius="50">
              {% csrf_token %}
-             <table style="padding:0.7em">
+             <table style="padding:0.7em;border-radius:0.5em;background-color:#008bca;border-color:#008bca">
              <tr>
-                 <td>{{ form.username.label_tag }}</td>
+                 <td><label>{{ form.username.label_tag }}</label></td>
                  <td>{{ form.username }}</td>
              </tr>
              <tr>
-                 <td>{{ form.password.label_tag }}</td>
-                 <td>{{ form.password }}</td>
-                 </tr>
+                 <td class="tablerow"><label>{{ form.password.label_tag }}</label></td>
+                 <td class="tablerow">{{ form.password }}</td>
+             </tr>
              </table>
 
-             <input type="submit" class="button" value="login" />
+             <input type="submit" class="button round" value="login" />
          </form>
     </div>
     <div class="small-4 column">
