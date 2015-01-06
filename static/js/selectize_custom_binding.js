@@ -40,6 +40,7 @@ ko.bindingHandlers.customSelectize = {
 				getModelChoice(json_url, choice_field, value);
 				var $select = $(element).selectize({
 					plugins: ['remove_button'],
+					colorField: black;
 					});
 				var z = ucFirstAllWords($(element)
       					.attr('name')

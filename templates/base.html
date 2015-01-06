@@ -9,13 +9,53 @@
 		<script type="text/javascript" src="{{ STATIC_URL }}js/knockout-3.2.0.js"> </script>
 		<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.validate.js"></script>
 		<script type = "text/javascript" src = "{{ STATIC_URL }}js/jquery.validate.min.js"></script>
+		<style>
+		body {
+			background-color:#363636;
+		}
+		a {
+			color: #ffffff;
+		}
+
+		label {
+			font-family:sans-serif;
+			font-size:1em;
+			font-weight:bold;
+			color:#008bca;
+		}
+
+
+		.breadcrumbs li a {
+			font-family: sans-serif;
+			font-size: 1.5em;
+			font-weight: bold;
+			padding: 1em;
+		}
+
+		.breadcrumbs li a:hover{
+			background-color: black;
+			color:#00bfcf;
+			border-radius: 2.5em;
+		}
+
+		form input, form textarea, .selectize-control .selectize-input, #id_scheduled_time, .breadcrumbs{
+			background-color: #e6e6e6;
+			border-radius: 0.2em;
+			font-family:sans-serif;
+			font-size:0.9em;
+			font-weight:bold;
+			color:black;
+		}
+
+
+		</style>
 
 		{% block extra_head %}{% endblock %}
 	</head>
 	<body>
 		{% endblock %}
 		<div class = "row" >
-			<div class = "small-12 column" >
+			<div class = "small-12 coltumn" >
 				<ul class = "breadcrumbs" >
 					<li > <a href="/message/compose/" > Compose </a></li>
 					<li > <a href="/message/sent/" > Sent </a> </li>

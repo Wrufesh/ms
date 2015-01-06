@@ -95,7 +95,7 @@ def compose(request, msg_id=None):
                 scheduled_message.apply_async(
                     (message_id,), countdown=get_waiting_time_sec(
                         new_message.send_time))
-            return HttpResponseRedirect('/message/')
+            return HttpResponseRedirect('/')
     else:
         if edit:
             e_message = Message.objects.get(id=msg_id)
@@ -107,9 +107,9 @@ def compose(request, msg_id=None):
                 'scheduled_time': e_message.send_time,
             }
             form = ComposeMessageForm(data)
-            pdb.set_trace()
         else:
             form = ComposeMessageForm()
+            # pdb.set_trace()
     context = {'form': form,
                'message_id': msg_id
                }

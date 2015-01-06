@@ -8,12 +8,12 @@
 	<link rel="stylesheet" href="{{ STATIC_URL }}js/dist/css/jquery.datetimepicker.css" />
 	<style>
 		#and_or {
-			margin-top: 45px;*/
-			/*text-indent: 15px; */
-			color: #333;
-			font-size: 15px;
-			opacity: 0.5; 
-			font-family: Serif;;
+			color: #008bca;
+			text-align: center;
+			font-weight: bold;
+			font-size: 1.5em;
+			font-family: sans-serif;
+			padding-top: 1em;
 		}
 	</style>
 {% endblock %}
@@ -38,7 +38,7 @@
 			{{ form.user_receivers }}
 			</label>
 		</div>
-		<div class = "small-1 column">
+		<div class = "small-2 column">
 			<p id="and_or">AND|OR</p>
 		</div>
 
@@ -53,8 +53,8 @@
 		<div class = "small-12 column">
 			<label>{{ form.message.label }}:
 			<p>{{ form.message.errors }}</p>
-			{{ form.message }}
 			</label>
+			{{ form.message }}
 		</div>
 	</div>
 	
