@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 from rest_framework.urlpatterns import format_suffix_patterns
 from django.contrib import admin
 from msgin import views
-# from django.contrib.auth import views as V
+
 
 urlpatterns = patterns('',
                        url(r'^$', 'ms.views.home', name='home'),
@@ -19,7 +19,7 @@ urlpatterns = patterns('',
                            name='groups_api'),
                        url(r'^groups/(?P<pk>[0-9]+)/$',
                            views.GroupDetail.as_view()),
-                       url(r'^login/$', 'django.contrib.auth.views.login', name='login_form'),
+                       url(r'^login/$', views.custom_login, name='login_form'),
                        url(r'^logout/$','django.contrib.auth.views.logout',{'next_page':'/login/'},name='logout'),
                        )
 urlpatterns = format_suffix_patterns(urlpatterns)

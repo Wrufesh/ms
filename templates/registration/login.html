@@ -22,7 +22,7 @@
 	<br/>
 	<br/>
          <h3 style="font-family:Sans-serif;color:#008cba">Login</h3>
-         <form method="post" action="{% url 'django.contrib.auth.views.login' %}" radius="50">
+         <form method="post" action="{% url 'msgin.views.custom_login' %}" radius="50">
              {% csrf_token %}
              <table style="padding:0.7em;border-radius:0.5em;background-color:#008bca;border-color:#008bca">
              <tr>
