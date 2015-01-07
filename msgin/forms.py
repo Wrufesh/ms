@@ -9,14 +9,14 @@ class ComposeMessageForm(forms.Form):
         required=False,
         widget=forms.SelectMultiple(
             attrs={
-                'data-bind': 'customSelectize: u_r, modelUrl:"/users/", choiceField:"username"',
+                'data-bind': 'customSelectize: u_r, modelUrl:"/users/", choiceField:"username", selectedOptions:selected_u_r',
                 'placeholder': 'Select USERS'}))
     group_receivers = forms.ModelMultipleChoiceField(
         queryset=Group.objects.all(),
         required=False,
         widget=forms.SelectMultiple(
             attrs={
-                'data-bind': 'customSelectize: g_r, modelUrl:"/groups/", choiceField:"name"',
+                'data-bind': 'customSelectize: g_r, modelUrl:"/groups/", choiceField:"name", selectedOptions:selected_g_r',
                 'placeholder': 'Select GROUPS'}))
     message = forms.CharField(widget=forms.Textarea(
         attrs={'placeholder': 'Enter the message here'}))

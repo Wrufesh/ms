@@ -78,7 +78,7 @@
 		</div>
 	<div class = "row">
 		<div class = "small-12 column">
-			<input id="submit" type="submit" class="button" value="Save" data-bind="value: change_button_value, enable: u_r().length > 0 || g_r().length > 0"  >
+			<input id="submit" type="submit" class="button" value="Save" data-bind="value: change_button_value, enable: selected_u_r().length > 0 || selected_g_r().length > 0"  >
 		</div>
 		
 	</div>
@@ -101,7 +101,7 @@
 	<label>Retype Password:</label>
 	<input id="id_password_re" name="password_re" placeholder="Conform Password" type="password" data-bind="value: add_user_form_validation.password_re" required/>
 	<p id="server_errors" data-bind="html: add_user_form_validation.errors"></p>
-	<input id="user_receivers_submit" type="submit" class="button" value="Submit" data-bind="enable: add_user_form_validation.password() == add_user_form_validation.password_re()"/>
+	<input id="user_receivers_submit" type="submit" class="button" value="Add User" data-bind="enable: add_user_form_validation.password() == add_user_form_validation.password_re()"/>
 	<a class="close-reveal-modal">&#215;</a>
 </form>
 </div>
@@ -117,7 +117,7 @@
  		<h2>Add Group Form</h2></br>
  		<label>Group Name:<label>
  		<input id="id_groupname" maxlength="30" placeholder="Enter Group Name" name="name" type="text" required/>
- 		<input type="submit" class="button" value="Submit">
+ 		<input type="submit" class="button" value="Add Group">
     	<a class="close-reveal-modal">&#215;</a>
     </form>
 </div>

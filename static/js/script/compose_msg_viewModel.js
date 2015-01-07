@@ -22,6 +22,8 @@ $('#id_scheduled_time').datetimepicker({
 		self.change_button_value = ko.observable('Submit')
 		self.u_r = ko.observableArray();
 		self.g_r = ko.observableArray();
+		self.selected_u_r = ko.observableArray();
+		self.selected_g_r = ko.observableArray();
 		
 		self.add_user_form_validation = {
 			password: ko.observable(),
@@ -59,12 +61,12 @@ $('#id_scheduled_time').datetimepicker({
 
 		self.submit_save = function(data,event){
 			if(self.tog()==true){
-				self.change_button_value('Save');
+				self.change_button_value('Send To Outbox');
 				console.log(event.target.checked); // log out the current state
        			console.log("1");
        			return true;
 			} else {
-				self.change_button_value('Submit');
+				self.change_button_value('SEND');
 				console.log(event.target.checked); // log out the current state
        			console.log("1");
        			return true; 
