@@ -19,9 +19,13 @@
 {% endblock %}
 
 {% block content %}
-
-
 <div id="main-error-area" class="row">
+{% if success_msg %}
+<div data-alert class="alert-box success">
+    <label>{{ success_msg }}</label>
+    <a href="#" class="close">&times;</a>
+</div>
+{% endif %}
 </div>
 	
 

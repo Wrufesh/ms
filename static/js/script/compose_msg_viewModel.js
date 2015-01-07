@@ -50,7 +50,7 @@ $('#id_scheduled_time').datetimepicker({
 					$(hh).trigger("click");
 
 				}).done(function(){
-					var errorHtml = '<div data-alert class="alert-box success"> Option successfully ADDED and SELECTED! <a href="#" class="close">&times;</a></div>';
+					var errorHtml = '<div data-alert class="alert-box success"><label> Option successfully ADDED and SELECTED!</label> <a href="#" class="close">&times;</a></div>';
 					$('#main-error-area').append(errorHtml).foundation();
 					// $('#main-error-area').fadeOut(6000, "swing");
 				}).error(function(data){

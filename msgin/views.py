@@ -90,28 +90,36 @@ def compose(request, msg_id=None):
             new_message.save()
             new_message.group_receiver.add(*g_receiver)
             new_message.user_receiver.add(*u_receiver)
+            get_id = 0
             if scheduled:
+                get_id = 1
                 message_id = new_message.id
                 scheduled_message.apply_async(
                     (message_id,), countdown=get_waiting_time_sec(
                         new_message.send_time))
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/?m='+str(get_id))
     else:
+        context_msg = None
+        success_msg = ['Message Send Successfully', 'Message Send To OUTBOX']
+        if request.GET:
+            get_data = int(request.GET['m'])
+            # pdb.set_trace()
+            context_msg = success_msg[get_data]
         if edit:
             e_message = Message.objects.get(id=msg_id)
             data = {'user_receivers': get_related_list(
                 e_message.user_receiver.all()),
                 'group_receivers': get_related_list(
-                e_message.group_receiver.all()),
+                    e_message.group_receiver.all()),
                 'message': e_message.message_content,
                 'scheduled_time': e_message.send_time,
             }
             form = ComposeMessageForm(data)
         else:
             form = ComposeMessageForm()
-            # pdb.set_trace()
     context = {'form': form,
-               'message_id': msg_id
+               'message_id': msg_id,
+               'success_msg': context_msg
                }
     return render(request, 'msgin/compose_message.html', context)
 

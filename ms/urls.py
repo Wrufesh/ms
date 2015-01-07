@@ -5,7 +5,7 @@ from msgin import views
 
 
 urlpatterns = patterns('',
-                       url(r'^$', 'msgin.views.compose', name='home'),
+                       url(r'^$', 'msgin.views.compose'),
                        url(r'^message/', include('msgin.urls')),
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'^msgs/$', views.MessageList.as_view()),
