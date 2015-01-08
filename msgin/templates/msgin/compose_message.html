@@ -10,7 +10,7 @@ Compose Message
 	<link rel="stylesheet" href="{{ STATIC_URL }}js/dist/css/selectize.legacy.css" />
 	<link rel="stylesheet" href="{{ STATIC_URL }}js/dist/css/jquery.datetimepicker.css" />
 	<style>
-		#and_or {
+		.headings{
 			color: #008bca;
 			text-align: center;
 			font-weight: bold;
@@ -46,7 +46,7 @@ Compose Message
 			</label>
 		</div>
 		<div class = "small-2 column">
-			<p id="and_or">AND|OR</p>
+			<p class="headings">AND|OR</p>
 		</div>
 
 		<div class = "small-5 column">
@@ -99,7 +99,7 @@ Compose Message
 	var selectize_element = '#id_user_receivers';
 	ajaxPost(url, optionField, oble, selectize_element, data)
 	}">
-    <h2>Add User Form</h2>
+    <p class="headings">Add User Form</p>
     
     <label>Username:</label>
     <input id="id_username" maxlength="30" name="username" type="text" placeholder="Enter Username" required/><br />
@@ -121,7 +121,7 @@ Compose Message
 	var selectize_element = '#id_group_receivers';
 	ajaxPost(url, optionField, oble, selectize_element, data)
 	}">
- 		<h2>Add Group Form</h2></br>
+ 		<p class="headings">Add Group Form</p>
  		<label>Group Name:<label>
  		<input id="id_groupname" maxlength="30" placeholder="Enter Group Name" name="name" type="text" required/>
  		<input type="submit" class="button" value="Add Group">
