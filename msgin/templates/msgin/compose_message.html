@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{% block title %}
+Compose Message
+{% endblock %}
 {% block extra_head %}
 	<link rel="stylesheet" href="{{ STATIC_URL }}js/dist/css/selectize.bootstrap2.css" />
 	<link rel="stylesheet" href="{{ STATIC_URL }}js/dist/css/selectize.bootstrap3.css" />
@@ -21,7 +24,7 @@
 {% block content %}
 <div id="main-error-area" class="row">
 {% if success_msg %}
-<div data-alert class="alert-box success">
+<div data-alert class="alert-box success radius">
     <label>{{ success_msg }}</label>
     <a href="#" class="close">&times;</a>
 </div>

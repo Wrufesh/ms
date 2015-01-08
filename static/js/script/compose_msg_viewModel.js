@@ -19,7 +19,7 @@ $('#id_scheduled_time').datetimepicker({
 	Toggle = function(){
 		var self = this;
 		self.tog = ko.observable(false);
-		self.change_button_value = ko.observable('Submit')
+		self.change_button_value = ko.observable('SEND')
 		self.u_r = ko.observableArray();
 		self.g_r = ko.observableArray();
 		self.selected_u_r = ko.observableArray();

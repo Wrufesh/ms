@@ -47,7 +47,7 @@ ko.bindingHandlers.customSelectize = {
       			var element_to_append = $(element)
       					.parent()
       					.find('.selectize-dropdown.multi.plugin-remove_button');
-      			var html_to_append = '<div class="label" style="width:100%;font-size:medium;font-weight:bold" data-reveal-id="' + 
+      			var html_to_append = '<div class="custom-selectize-add-button" data-reveal-id="' + 
       							$(element).attr('name') +
       							'">Add '+ 
       						z +
