@@ -11,9 +11,11 @@ Send Message
 
 <div class="row">
 	<div class="small-12 column">
+		<label>
 		Sort By: {% anchor created_at 'Date'%} ::
-				{% anchor user_receiver 'To user:' %} ::
-
+				{% anchor user_receivers 'Receiver' %} ::
+				{% anchor group_receivers 'Group Receiver' %} ::
+        </label>
 		<hr/>
 		{% for o in paginated_obj %}
 			<label>From:
@@ -35,11 +37,11 @@ Send Message
 				{% endfor %}
 
 			</label>
-			<b>{{ o.message_content }}</b>
+			<p class="message-content">{{ o.message_content }}</p>
 			<hr/>
 		{% endfor %}
-		{% paginate %}
 	</div>
+	<label>{% paginate %}</label>
 </div>
 
 {% endblock %}

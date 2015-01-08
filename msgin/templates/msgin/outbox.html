@@ -3,22 +3,30 @@
 Outbox
 {% endblock %}
 {% block content %}
+{% load pagination_tags %}
+{% load sorting_tags %}
+
+{% autosort obj as sorted_obj %}
+{% autopaginate sorted_obj 5 as paginated_obj %}
+
 {% for o in obj %}
 
 <div class="row">
 	<div class="small-12 column">
-		<label>^_^{% for user_receiv in o.user_receiver.all %}
+		<label>^_^{% for user_receiv in o.user_receivers.all %}
 				<a href="/message/outbox/usr/{{ user_receiv.id }}"> {{ user_receiv }},</a>
 				{% endfor %}
-		<label>^_^{% for grp_receiv in o.group_receiver.all %}
+		<label>^_^{% for grp_receiv in o.group_receivers.all %}
 				<a href="/message/outbox/grp/{{ grp_receiv.id }}"> {{ grp_receiv }},</a>
 				{% endfor %}
 
 				<label><i>Scheduled Time:</i> {{ o.send_time }}</label></label>
-		<b>{{ o.message_content }}</b>
+		<p class="message-content">{{ o.message_content }}</p>
 		<a href="/message/{{ o.id }}">Edit</a>
 		<hr>
+
 	</div>
+    <label>{% paginate %}</label>
 </div>
- {% endfor %}
+{% endfor %}
 {% endblock %}

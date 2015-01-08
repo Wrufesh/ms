@@ -126,7 +126,7 @@ def compose(request, msg_id=None):
 
 def inbox(request):
     group_name = request.user.groups.all()
-    obj = Message.objects.filter(Q(user_receiver=request.user) | Q(
+    obj = Message.objects.filter(Q(user_receiver=request.user) or Q(
         group_receiver=group_name), status="SEND")
     return render(request, 'msgin/inbox.html', {'obj': obj})
 

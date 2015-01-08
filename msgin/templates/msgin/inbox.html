@@ -7,25 +7,24 @@ Inbox
 {% load sorting_tags %}
 
 {% autosort obj as sorted_obj %}
-{% autopaginate sorted_obj 3 as paginated_obj %}
+{% autopaginate sorted_obj 5 as paginated_obj %}
 
 <div class="row">
 	<div class="small-12 column">
-		Sort By: {% anchor created_at 'Date'%} ::
-		{% anchor sender 'Sender' %} ::
-		{% anchor group_receiver 'Group' %}
+	<label>
+		Sort By: {% anchor created_at 'Date'%}
+	</label>
 		<hr/>
 		{% for o in paginated_obj %}
-			<label><a href="#"> ^_^ {{ o.sender }}
-				{% for group_receiv in o.group_receiver.all %}
+			<label>From: {{ o.sender }}</label>
+				<!-- {% for group_receiv in o.group_receiver.all %}
 					{{ group_receiv }}
-				{% endfor %}</a>
-			</label>
-			<b>{{ o.message_content }}</b>
+				{% endfor %}</a> -->
+			<p class="message-content">{{ o.message_content }}</p>
 			<hr/>
 		{% endfor %}
-		{% paginate %}
 	</div>
+	<label>{% paginate %}</label>
 </div>
 
 {% endblock %}
