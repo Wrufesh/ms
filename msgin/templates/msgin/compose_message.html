@@ -9,16 +9,7 @@ Compose Message
 	<link rel="stylesheet" href="{{ STATIC_URL }}js/dist/css/selectize.default.css" />
 	<link rel="stylesheet" href="{{ STATIC_URL }}js/dist/css/selectize.legacy.css" />
 	<link rel="stylesheet" href="{{ STATIC_URL }}js/dist/css/jquery.datetimepicker.css" />
-	<style>
-		.headings{
-			color: #008bca;
-			text-align: center;
-			font-weight: bold;
-			font-size: 1.5em;
-			font-family: sans-serif;
-			padding-top: 1em;
-		}
-	</style>
+	
 {% endblock %}
 
 {% block content %}
@@ -40,16 +31,16 @@ Compose Message
 
 {% csrf_token %}
 	<div class = "row">
-		<div class = "small-5 column">
+		<div class = "small-12 large-5 medium-5 large-5 medium-5 column">
 			<label>{{ form.user_receivers.label }}:
 			{{ form.user_receivers }}
 			</label>
 		</div>
-		<div class = "small-2 column">
+		<div class = "small-12  large-2 medium-2 column">
 			<p class="headings">AND|OR</p>
 		</div>
 
-		<div class = "small-5 column">
+		<div class = "small-12 large-5 medium-5 column">
 			<label>{{ form.group_receivers.label }}:
 			{{ form.group_receivers }}
 			</label>
@@ -59,9 +50,9 @@ Compose Message
 	<div class = "row">
 		<div class = "small-12 column">
 			<label>{{ form.message.label }}:
-			<p>{{ form.message.errors }}</p>
-			</label>
+			{{ form.message.errors }}
 			{{ form.message }}
+			</label>
 		</div>
 	</div>
 	
@@ -76,8 +67,9 @@ Compose Message
 			<label data-bind="visible:tog">{{ form.scheduled_time.label }}:</label>
 		</div>
 		<div class="small-9 column">
-			<p>{{ form.scheduled_time.errors }}</p>
+			<label>{{ form.scheduled_time.errors }}
 			<p data-bind="visible:tog">{{ form.scheduled_time }}</p>
+			</label>
 		</div>
 
 		</div>
@@ -99,7 +91,7 @@ Compose Message
 	var selectize_element = '#id_user_receivers';
 	ajaxPost(url, optionField, oble, selectize_element, data)
 	}">
-    <p class="headings">Add User Form</p>
+    <p class="headings add-form">Add User Form</p>
     
     <label>Username:</label>
     <input id="id_username" maxlength="30" name="username" type="text" placeholder="Enter Username" required/><br />
@@ -121,7 +113,7 @@ Compose Message
 	var selectize_element = '#id_group_receivers';
 	ajaxPost(url, optionField, oble, selectize_element, data)
 	}">
- 		<p class="headings">Add Group Form</p>
+ 		<p class="headings add-form">Add Group Form</p>
  		<label>Group Name:<label>
  		<input id="id_groupname" maxlength="30" placeholder="Enter Group Name" name="name" type="text" required/>
  		<input type="submit" class="button" value="Add Group">

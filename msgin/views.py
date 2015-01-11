@@ -52,6 +52,7 @@ def custom_login(request):
 
 # @login_required
 def compose(request, msg_id=None):
+    context_msg = None
     if msg_id is not None:
         new_message = Message.objects.get(id=msg_id)
         if new_message.status != 'OUTBOX':
@@ -99,7 +100,6 @@ def compose(request, msg_id=None):
                         new_message.send_time))
             return HttpResponseRedirect('/?m='+str(get_id))
     else:
-        context_msg = None
         success_msg = ['Message Send Successfully', 'Message Send To OUTBOX']
         if request.GET:
             get_data = int(request.GET['m'])
